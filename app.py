@@ -35,6 +35,7 @@ def register():
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
@@ -49,12 +50,13 @@ def login():
         user = cursor.fetchone()
         
         if user:
-            flash('Login bem-sucedido!', 'success') 
-            return redirect(url_for('dashboard'))
+            flash('Login bem-sucedido!', 'success')
+            
+            return redirect(f"https://securelogin.arubanetworks.com/swarm.cgi?cmd=authenticate&user={email}&password={senha}&url=https://www.flomain.de")
         else:
-            flash('Acesso negado!', 'danger') 
-
-            cursor.close()
+            flash('Acesso negado!', 'danger')
+        
+        cursor.close()
         conn.close()
         
     return render_template('login.html')
